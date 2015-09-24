@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% load core_tags %}
+
+
+{% block heading %}
+    {% include "core/includes/header.html" %}
+{% endblock %}
+
+{% block content %}
+
+    {% include "core/includes/intro.html" with intro=self.intro only %}
+
+    {% if request.GET.tag|length %}
+        <h4>Showing posts tagged as {{ request.GET.tag|safe }} <a href=" {% pageurl self %} ">Show all</a></h4>
+    {% endif %}
+    <div class="list-group">
+        {# Uses serve method defined in models.py - allows for paging if required #}
+        {# See also standard index for creating a listing with a tag #}
+        {% for work in works %}
+            {% include "core/includes/work_list_item.html" %}
+        {% empty %}
+            No works found
+        {% endfor %}
+    </div>
+
+    {# Pagination - uses django.core.paginator #}
+    {# Append any other url query string variables to the next and previous links - allows tag to be passed through #}
+    <div class="row">
+        <div class="col-sm-4 previous">
+            {% if works.has_previous %}
+                <a href="?page={{ works.previous_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">Previous</a>
+            {% endif %}
+        </div>
+        <div class="col-sm-4 pages">
+            Page {{ works.number }} of {{ works.paginator.num_pages }}
+        </div>
+        <div class="col-sm-4 next">
+            {% if works.has_next %}
+                <a href="?page={{ works.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% include "core/includes/related_links.html" with related_links=self.related_links.all only %}
+
+    {% work_listing_homepage %}
+
+{% endblock %}

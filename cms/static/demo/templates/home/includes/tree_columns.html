@@ -1,0 +1,24 @@
+{% load wagtailcore_tags %}
+
+{% if homepage %}
+<div class="body-content">
+    <div class="row">
+        {% if homepage.first_column %}
+        <div class="col-md-4">
+            {{ homepage.first_column | richtext }}
+        </div>
+        {% endif %}
+        {% if homepage.second_column %}
+        <div class="col-md-4">
+            {{ homepage.second_column | richtext }}
+        </div>
+        {% endif %}
+        {% if homepage.third_column%}
+        <div class="col-md-4">
+            {{ homepage.third_column | richtext }}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+

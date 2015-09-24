@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+{% load core_tags %}
+
+{% block heading %}
+    <header id="head">
+        {% include 'core/includes/home_carousel.html'  with carousel_items=self.carousel_items.all only %}
+    </header>
+{% endblock %}
+
+
+{% block content %}
+
+    <section class="news-box top-margin">
+        {% include "core/includes/body.html" with body=self.body only %}
+        {% include "core/includes/streamfield.html" %}
+
+    </section>
+
+
+    {% work_listing_homepage %}
+
+{% endblock %}

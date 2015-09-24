@@ -1,0 +1,23 @@
+{% load wagtailimages_tags wagtailembeds_tags static %}
+
+<!-- Header -->
+
+<header id="head">
+    <div class="container">
+        <div class="fluid_container">
+            <div class="camera_wrap camera_emboss pattern_1" id="camera_wrap_4">
+                {% for carousel_item in carousel_items %}
+                {% image carousel_item.image width-100 as carouselimagedata %}
+                {% image carousel_item.image width-1280 as carouselimagedata1 %}
+                <div data-thumb="{{ carouselimagedata.url }}" data-src="{{ carouselimagedata1.url }}">
+                </div>
+                {% endfor %}
+            </div>
+            <!-- #camera_wrap_3 -->
+        </div>
+        <!-- .fluid_container -->
+    </div>
+</header>
+<!-- /Header -->
+
+

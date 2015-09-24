@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+{% load wagtailadmin_tags wagtailcore_tags static i18n %}
+
+{% if intro %}
+  <div class="body-content">
+    {{intro|richtext }}
+  </div>
+{% endif %}

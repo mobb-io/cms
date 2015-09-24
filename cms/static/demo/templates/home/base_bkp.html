@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load core_tags cache compress static wagtailuserbar wagtailimages_tags wagtailcore_tags i18n %}
+
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="author" content="mobb.io">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% if self.search_description %}{{ self.search_description }}{% endif %}">
+
+    <title>
+        {% block title %}
+        {% if self.seo_title %}
+        {{ self.seo_title }}
+        {% else %}
+        {{ self.title }}
+        {% endif %}
+        {% endblock %}
+        {% block title_postfix %} | Vidraçaria Piratininga Ltada.{% endblock %}
+    </title>
+
+    {# External stylesheets #}
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+
+    {# Local static assets such as css, images and javascrpt should be stored at [yourapp]/static/[yourapp]/... #}
+    {% compress css %}
+    {# Custom stylesheets #}
+    {# SCSS compilation relies on django compressor #}
+    <link rel="stylesheet" type="text/x-scss" href="{% static "home/css/main.scss" %}"/>
+
+    <link rel="stylesheet" href="{% static "home/css/style.css" %}"/>
+    <link rel="stylesheet" href="{% static "home/css/bootstrap.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "home/css/font-awesome.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "home/css/bootstrap-theme.css" media="screen" %}"/>
+    <link rel='stylesheet' href="{% static "home/css/camera.css" %}" id='camera-css' type='text/css' media='all'/>
+    {% endcompress %}
+
+    {% compress js %}
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="{% static "home/js/html5shiv.js" %}"/>
+    <script src="{% static "home/js/respond.min.js" %}"/>
+    <![endif]-->
+    {% endcompress %}
+
+    {% block extra_css %}{% endblock %}
+    {# Override this block in individual templates in order to add stylesheets on a template by template basis #}
+
+    {# Javascript that needs to be called from head e.g. google analytics snippet and bootstrap shivs #}
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-xxxxxxx-x']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <!--[endif]-->
+
+    {% if self.feed_image %}
+    {% image self.feed_image original as img %}
+    {% compress css %}
+    <style>
+        #head.secondary {
+            height: 300px;
+            min-height: 300px;
+            padding-top: 0px;
+            background: url({{ img.url }}) 0px -270px no-repeat;
+            /*background: #000000;*/
+            background-size: cover;
+            text-align: left;
+        }
+    </style>
+    {% endcompress %}
+    {% endif %}
+
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+
+{% wagtailuserbar %}
+
+<div class="mainNav navbar-header container-full">
+    {% block menu %}
+    {% get_site_root as site_root %}
+    {% top_menu parent=site_root calling_page=self %}
+    {% endblock %}
+</div>
+
+{% block breadcrumbs %}
+    {% if self.show_title == True %}
+        {% for page in self.get_ancestors %}
+        {% if page.is_root == False %}
+        <header id="head" class="secondary">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12" >
+                        <h1 style="color:{{ self.title_font_color }}">{{ self.title }}</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% include 'core/includes/prev_next.html' %}
+
+<section class="container">
+    {% block content %}{% endblock %}
+</section>
+
+{% adverts %}
+
+{# External javascript #}
+<!-- script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script -->
+
+{% compress js %}
+<script src="{% static "home/js/vendor/fluidvids.js" %}"/>
+<script src="{% static "home/js/main.js" %}"/>
+{% endcompress %}
+
+{% block extra_js %}
+<script type='text/javascript' src="{% static "home/js/jquery.min.js" %}"/>
+<script type='text/javascript' src="{% static "home/js/modernizr-latest.js" %}"/>
+<script type='text/javascript' src="{% static "home/js/fancybox/jquery.fancybox.pack.js" %}"/>
+
+<script type='text/javascript' src="{% static "home/js/jquery.mobile.customized.min.js" %}"/>
+<script type='text/javascript' src="{% static "home/js/jquery.easing.1.3.j" %}"/>
+<script type='text/javascript' src="{% static "home/js/camera.min.js" %}"/>
+<script type='text/javascript' src="{% static "home/js/bootstrap.min.js" %}"/>
+<script type='text/javascript' src="{% static "home/js/custom.js" %}"/>
+<script>
+    jQuery(function () {
+
+        jQuery('#camera_wrap_4').camera({
+            height: '300',
+            loader: 'bar',
+            pagination: false,
+            thumbnails: false,
+            hover: false,
+            opacityOnGrid: false,
+            imagePath: '{{ STATIC_URL }}home/images/'
+        });
+
+    });
+
+    function preLoadImages () {
+    $.get($('link[rel="stylesheet"]')[0].href, function(data){
+        r = /url\(['|"]?(\S+\.(gif|jpg|jpeg|png)[^'(]*)['|"]?\)/ig;
+            while (match = r.exec(data)){
+                var cacheImage = document.createElement('img');
+                cacheImage.src = match[1];
+            }
+        });
+    }
+    preLoadImages();
+
+</script>
+{% endblock %}
+
+{% block footer %}
+<footer id="footer">
+    {% get_site_root as site_root %}
+    {% footer parent=site_root calling_page=self %}
+</footer>
+{% endblock %}
+
+</body>
+</html>

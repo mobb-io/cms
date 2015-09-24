@@ -1,0 +1,38 @@
+{% load core_tags wagtailcore_tags static %}
+{% get_site_root as site_root %}
+
+{# Implementation of bootstrap theme dropdown menu - shows top level links and their children #}
+<div role="navigation" class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            {# Link to home page #}
+            <a href="{% pageurl site_root %}" class="navbar-brand" title="{{ site_root.title }}"
+               data-placement="bottom">
+                <img src="{% static 'core/assets/images/logo.png' %}" alt="Vidraçaria Piratininga Ltda."></a>
+        </div>
+        <div style="left: 1158px; top: 306px; position: absolute;"><a href="http://www.blindex.com.br/onde-comprar"><img
+                src="{% static 'core/images/blindex_logo.png' %}" alt="Box Blindex" ></a> </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    {% for menuitem in menuitems %}
+                    <li class="{% if menuitem.show_dropdown %}dropdown{% endif %}{% if menuitem.active %} active{% endif %}">
+                        {% if menuitem.show_dropdown %}
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ menuitem.title }} <b
+                                class="caret"></b></a>
+                        {% top_menu_children parent=menuitem %}
+                        {% else %}
+                        <a href="{% pageurl menuitem %}">{{ menuitem.title }}</a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>

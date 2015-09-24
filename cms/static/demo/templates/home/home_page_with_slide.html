@@ -1,0 +1,25 @@
+{% extends "home/base.html" %}
+{% load compress static wagtailadmin_tags core_tags %}
+
+{% block content %}
+    {% if self.slide_items.all %}
+    <div class="container">
+        {% include "home/includes/slide.html" with slide_items=self.slide_items.all only %}
+    </div>
+    <div class="container" style="margin-top:18%;">
+        {% include "home/includes/body.html" with body=self.body only %}
+    </div>
+    {% else %}
+    {% if self.body %}
+    <div class="container" style="margin-top:2px;">
+        {% include "home/includes/body.html" with body=self.body only %}
+    </div>
+    {% endif %}
+    {% endif %}
+    {% if self.first_column or self.second_column or self.third_column %}
+    <div class="container">
+        {% include "home/includes/tree_columns.html" with homepage=self only %}
+    </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,116 @@
+<div class="page-header"><h3>Contatos</h3></div>
+<div class="row">
+    <div class="col-md-6">
+        <form class="form-light mt-20" role="form">
+            <div class="form-group">
+                <label>Nome</label>
+                <input type="text" class="form-control" placeholder="Nome">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="text" class="form-control" placeholder="Telefone">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Assunto</label>
+                <input type="text" class="form-control" placeholder="Assunto">
+            </div>
+            <div class="form-group">
+                <label>Mensagem</label>
+                    <textarea class="form-control" id="message" placeholder="Mensagem..."
+                              style="height:100px;"></textarea>
+            </div>
+            <button type="submit" class="btn btn-two">Enviar</button>
+            <p><br/></p>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="contact-info">
+                    <h5>Endereço</h5>
+                    {% if contact.address %}
+                    <p>{{ contact.address }}</p>
+                    {% endif %}
+
+                    <h5>Email</h5>
+                    {% if contact.email %}
+                    <p>{{ contact.email}}</p>
+                    {% endif %}
+
+                    <h5>Telefone</h5>
+                    {% if contact.telephone_1 %}
+                    <p>{{ contact.telephone_1 }}<br>
+                        {% endif %}
+                        {% if contact.telephone_2 %}
+
+                    <p>{{ contact.telephone_2 }}<br>
+                        {% endif %}
+                        {% if contact.telephone_3 %}
+
+                    <p>{{ contact.telephone_3 }}<br>
+                        {% endif %}
+
+                    <h5>Fax</h5>
+                    {% if contact.fax %}
+                    <p>{{ contact.fax }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="contact-info">
+                    <h5>Segunda - Sexta</h5>
+
+                    <p>09:00 AM - 6:30 PM</p>
+
+                    <h5>Sábado</h5>
+
+                    <p>Fechado</p>
+
+                    <h5>Domingo</h5>
+
+                    <p>Fechado</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
+<div style='overflow:hidden;height:300px;width:100%;'>
+    <div id='gmap_canvas' style='height:300px;width:100%;'></div>
+    <style>#gmap_canvas img {
+        max-width: none !important;
+        background: none !important
+    }</style>
+</div> <a href='http://maps-generator.com/pt'>Maps-Generator</a>
+
+<script type='text/javascript'
+        src='https://embedmaps.com/google-maps-authorization/script.js?id=aa6bfb1b8816b770e2e4f88d7fabfeb4a82ca286'></script>
+<script type='text/javascript'>function init_map() {
+    var myOptions = {
+        zoom: 15,
+        center: new google.maps.LatLng(-22.9387018, -43.059906299999966),
+        mapTypeId: google.maps.MapTypeId.HYBRID
+    };
+    map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+    marker = new google.maps.Marker({map: map, position: new google.maps.LatLng(-22.9387018, -43.059906299999966)});
+    infowindow = new google.maps.InfoWindow({content: '<strong>Vidraçaria Piratininga Ltda.</strong><br>Estr. Francisco da Cruz Nunes, 6158 - Piratininga Niterói - RJ 24350-310<br> Niterói<br>'});
+    google.maps.event.addListener(marker, 'click', function () {
+        infowindow.open(map, marker);
+    });
+    infowindow.open(map, marker);
+}
+google.maps.event.addDomListener(window, 'load', init_map);</script>
+
+
+

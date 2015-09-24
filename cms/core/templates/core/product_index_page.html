@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+{% load wagtailcore_tags core_tags %}
+
+{% block heading %}
+    {% include "core/includes/header.html" %}
+{% endblock %}
+
+{% block content %}
+    {% include "core/includes/intro.html" with intro=self.intro only %}
+
+    {# Listing created with a tag - allows filtering by whether the page is live #}
+    {# See also the blog index or events index where the listing is created from a method defined in models.py #}
+    {% product_index_listing calling_page=self %}
+
+    {% include "core/includes/related_links.html" with related_links=self.related_links.all only %}
+{% endblock %}

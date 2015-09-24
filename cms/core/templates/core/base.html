@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+{% load core_tags cache compress static wagtailuserbar wagtailimages_tags wagtailcore_tags i18n %}
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interior-Design-Responsive-Website-Templates-Edge">
+    <meta name="author" content="webThemez.com">
+    <title>Vidraçaria Piratininga Ltda.</title>
+    <link rel="favicon" href="{% static 'core/assets/images/favicon.png' %}">
+    <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <link rel="stylesheet" href="{% static 'core/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/assets/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/assets/css/bootstrap-theme.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'core/assets/css/style.css' %}">
+    <link rel='stylesheet' id='camera-css' href="{% static 'core/assets/css/camera.css' %}" type='text/css' media='all'>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="{% static 'core/assets/js/html5shiv.js' %}"></script>
+    <script src="{% static 'core/assets/js/respond.min.js' %}"></script>
+    <![endif]-->
+    <style>
+        #preloader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ffffff;
+            z-index: 99;
+            height: 100% auto;
+        }
+
+        #status {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            background-image: url("{% static 'core/images/status.gif' %}");
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: -100px 0 0 -100px;
+        }
+
+        #ads {
+            -moz-animation-duration: 3s;
+            -webkit-animation-duration: 3s;
+            -moz-animation-name: slidein;
+            -webkit-animation-name: slidein;
+            -moz-animation-iteration-count: infinite;
+            -webkit-animation-iteration-count: infinite;
+        }
+
+        @-moz-keyframes slidein {
+            from {
+                width: 160%
+            }
+
+            75% {
+                font-size: 250%;
+                width: 100%;
+            }
+
+            to {
+                width: 50%;
+            }
+        }
+
+        @-webkit-keyframes slidein {
+            from {
+                width: 160%
+            }
+
+            75% {
+                font-size: 250%;
+                width: 100%;
+            }
+
+            to {
+                width: 50%;
+            }
+        }
+
+    </style>
+
+    {% if self.title_image %}
+    {% image self.title_image original as img %}
+    {% compress css %}
+    <style>
+        #head.secondary {
+            height: 50%;
+            min-height: 450px;
+            padding-top: 5px;
+            background: url({{ img.url }}) no-repeat;
+            background-position: center;
+            background-size: cover;
+            text-align: left;
+        }
+    </style>
+    {% endcompress %}
+    {% endif %}
+</head>
+<body>
+
+<!-- Fixed navbar -->
+{% wagtailuserbar %}
+
+{% block menu %}
+{% get_site_root as site_root %}
+{% top_menu parent=site_root calling_page=self %}
+{% endblock %}
+<!-- /.navbar -->
+
+<header id="head">
+
+    {% block heading %}
+    {% endblock %}
+
+</header>
+<span style="opacity: 0.8; position: absolute; left: 0px; right: 0px; top: auto; bottom: auto; height: 7px; background-color: rgb(34, 34, 34);"
+      class="camera_bar_cont"></span>
+
+<div class="main container">
+    {% breadcrumbs %}
+
+    {% include 'core/includes/ads.html' %}
+
+    {% block content %}{% endblock %}
+
+    {% include 'core/includes/prev_next.html' %}
+</div>
+
+<footer id="footer">
+    <div class="container">
+        <div class="social text-center">
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-google-plus"></i></a>
+
+        </div>
+
+        <div class="clear"></div>
+        <!--CLEAR FLOATS-->
+    </div>
+    <div class="footer2">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 panel">
+                    <div class="panel-body">
+                        <p class="simplenav">
+                            <a href="/">Home</a> |
+                            <a href="/empresa">Empresa</a> |
+                            <a href="/produtos">Produtos</a> |
+                            <a href="/trabalhos">Trabalhos</a> |
+                            <a href="">Contato</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 panel">
+                    <div class="panel-body">
+                        <p class="text-right">
+                            <a href="http://mobb.io/" rel="develop">mobb.io</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /row of panels -->
+        </div>
+    </div>
+</footer>
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="{% static 'core/assets/js/modernizr-latest.js' %}"></script>
+<script type='text/javascript' src="{% static 'core/assets/js/jquery.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'core/assets/js/fancybox/jquery.fancybox.pack.js' %}"></script>
+
+<script type='text/javascript' src="{% static 'core/assets/js/jquery.mobile.customized.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'core/assets/js/jquery.easing.1.3.js' %}"></script>
+<script type='text/javascript' src="{% static 'core/assets/js/camera.min.js' %}"></script>
+<script src="{% static 'core/assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'core/assets/js/custom.js' %}"></script>
+<script>
+    jQuery(function () {
+
+        jQuery('#camera_wrap_4').camera({
+            height: '450',
+            loader: 'bar',
+            pagination: true,
+            thumbnails: true,
+            hover: true,
+            opacityOnGrid: true,
+            imagePath: "{% static 'core/assets/images/' %}"
+        });
+
+    });
+
+    // makes sure the whole site is loaded
+    jQuery(window).load(function () {
+        // will first fade out the loading animation
+        jQuery("#status").fadeOut();
+        // will fade out the whole DIV that covers the website.
+        jQuery("#preloader").delay(1000).fadeOut("slow");
+    });
+</script>
+{{ img.url }}
+</body>
+</html>
