@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.core.validators import RegexValidator
 from django.db.models import CharField
 
-from core import forms, widgets
+from . import forms, widgets
 
 
 class ColorField(CharField):
