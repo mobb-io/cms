@@ -1,6 +1,8 @@
 *.db
 .DS_Store
 .idea
+cms/core/fixtures/images
+cms/media
 venv
 env
 __pycache__
