@@ -1,9 +1,9 @@
-$(function() {
+$(function () {
 
-	var $menu = $('#main-menu');
+    var $menu = $('#main-menu');
 
-	// add the HTML structure
-	$('div.right-column').prepend('\
+    // add the HTML structure
+    $('div.right-column').prepend('\
   <div id="themes">\
    <h2>Switch theme (class)</h2>\
    <p>\
@@ -91,9 +91,9 @@ $(function() {
 &lt;script type="text/javascript" src="../libs/jquery/jquery.js"&gt;&lt;/script&gt;\n\
 \n\
 &lt;!-- SmartMenus jQuery plugin --&gt;\n\
-&lt;script type="text/javascript" src="../jquery.smartmenus.js"&gt;&lt;/script&gt;\n' + (window.addonScriptSrc ? $.map(window.addonScriptSrc, function(arr) {
-	return '\n&lt;!-- ' + arr[0] + ' --&gt;\n&lt;script type="text/javascript" src="' + arr[1] + '"&gt;&lt;/script&gt;\n';
-}).join('') : '') + '\
+&lt;script type="text/javascript" src="../jquery.smartmenus.js"&gt;&lt;/script&gt;\n' + (window.addonScriptSrc ? $.map(window.addonScriptSrc, function (arr) {
+            return '\n&lt;!-- ' + arr[0] + ' --&gt;\n&lt;script type="text/javascript" src="' + arr[1] + '"&gt;&lt;/script&gt;\n';
+        }).join('') : '') + '\
 \n\
 &lt;!-- SmartMenus jQuery init --&gt;\n\
 &lt;script type="text/javascript"&gt;\n\
@@ -109,57 +109,61 @@ $(function() {
   </div>\
 ');
 
-	// load additional themes
-	$('#themes-classes option').not(':first').each(function() {
-		var className = $(this).attr('value');
-		$('<link href="../css/' + className + '/' + className + '.css" rel="stylesheet" type="text/css" />').appendTo('head');
-	});
-	// update Respond.js to parse all themes loaded dynamically
-	if (window.respond) {
-		respond.update();
-	}
+    // load additional themes
+    $('#themes-classes option').not(':first').each(function () {
+        var className = $(this).attr('value');
+        $('<link href="../css/' + className + '/' + className + '.css" rel="stylesheet" type="text/css" />').appendTo('head');
+    });
+    // update Respond.js to parse all themes loaded dynamically
+    if (window.respond) {
+        respond.update();
+    }
 
-	// hook theme switcher
-	$('#themes-classes, #themes-horizontal, #themes-vertical, #themes-rtl').change(function() {
-		var $select = $('#themes-classes'),
-			$mainMenuDesktopWidthCSS = $('#main-menu-desktop-width-css'),
-			className = $select.val(),
-			vertical = $('#themes-vertical')[0].checked,
-			rtl = $('#themes-rtl')[0].checked,
-			$optionElm = $select.children().eq($select[0].selectedIndex),
-			initOptions = $optionElm.data('init-options' + (vertical ? '-vertical' : '')),
-			mainMenuClass = 'sm ' + (rtl ? 'sm-rtl ' : '') + (vertical ? 'sm-vertical ' : '') + className,
-			mainMenuWidth = vertical ? '12em' : '';
+    // hook theme switcher
+    $('#themes-classes, #themes-horizontal, #themes-vertical, #themes-rtl').change(function () {
+        var $select = $('#themes-classes'),
+            $mainMenuDesktopWidthCSS = $('#main-menu-desktop-width-css'),
+            className = $select.val(),
+            vertical = $('#themes-vertical')[0].checked,
+            rtl = $('#themes-rtl')[0].checked,
+            $optionElm = $select.children().eq($select[0].selectedIndex),
+            initOptions = $optionElm.data('init-options' + (vertical ? '-vertical' : '')),
+            mainMenuClass = 'sm ' + (rtl ? 'sm-rtl ' : '') + (vertical ? 'sm-vertical ' : '') + className,
+            mainMenuWidth = vertical ? '12em' : '';
 
-		if ($mainMenuDesktopWidthCSS.length) {
-			$mainMenuDesktopWidthCSS.remove();
-			$mainMenuDesktopWidthCSS = null;
-		}
-		$('<style id="main-menu-desktop-width-css">@media (min-width: ' + $optionElm.data('desktop-bp') + ') { #main-menu { ' + (vertical ? 'float:' + (rtl ? 'right' : 'left') + ';' : '') + ' width:' + mainMenuWidth + '; } }</style>').appendTo('head');
+        if ($mainMenuDesktopWidthCSS.length) {
+            $mainMenuDesktopWidthCSS.remove();
+            $mainMenuDesktopWidthCSS = null;
+        }
+        $('<style id="main-menu-desktop-width-css">@media (min-width: ' + $optionElm.data('desktop-bp') + ') { #main-menu { ' + (vertical ? 'float:' + (rtl ? 'right' : 'left') + ';' : '') + ' width:' + mainMenuWidth + '; } }</style>').appendTo('head');
 
-		// switch #main-menu theme
-		$menu.smartmenus('destroy')[0].className = mainMenuClass;
-		$menu.smartmenus(eval('(' + initOptions + ')'));
-		$('html,body').css('background', $optionElm.data('page-bg'));
+        // switch #main-menu theme
+        $menu.smartmenus('destroy')[0].className = mainMenuClass;
+        $menu.smartmenus(eval('(' + initOptions + ')'));
+        $('html,body').css('background', $optionElm.data('page-bg'));
 
-		// update code samples
-		$('span.themes-code-desktop-bp').text($optionElm.data('desktop-bp'));
-		$('span.themes-code-main-width').text(mainMenuWidth ? '			width: ' + mainMenuWidth + ';\n' : '');
-		$('span.themes-code-main-float').text(vertical ? '			float: ' + (rtl ? 'right' : 'left') + ';\n' : '');
-		$('span.themes-code-class span, #themes-codepen-theme-name').text(className);
-		$('#themes-codepen-url').attr('href', $optionElm.data('codepen-url'));
-		$('span.themes-code-main-class span').text(mainMenuClass);
-		$('span.themes-code-init-options').text(initOptions);
+        // update code samples
+        $('span.themes-code-desktop-bp').text($optionElm.data('desktop-bp'));
+        $('span.themes-code-main-width').text(mainMenuWidth ? '			width: ' + mainMenuWidth + ';\n' : '');
+        $('span.themes-code-main-float').text(vertical ? '			float: ' + (rtl ? 'right' : 'left') + ';\n' : '');
+        $('span.themes-code-class span, #themes-codepen-theme-name').text(className);
+        $('#themes-codepen-url').attr('href', $optionElm.data('codepen-url'));
+        $('span.themes-code-main-class span').text(mainMenuClass);
+        $('span.themes-code-init-options').text(initOptions);
 
-		// call any addon init code
-		if (window.addonScriptInit) {
-			try { eval(window.addonScriptInit); } catch(e) {};
-		}
-	});
+        // call any addon init code
+        if (window.addonScriptInit) {
+            try {
+                eval(window.addonScriptInit);
+            } catch (e) {
+            }
+            ;
+        }
+    });
 
-	// init SHJS syntax highlighter
-	$('<link href="../libs/demo-assets/shjs/shjs.css" rel="stylesheet" type="text/css" />').appendTo('head');
-	sh_highlightDocument();
+    // init SHJS syntax highlighter
+    $('<link href="../libs/demo-assets/shjs/shjs.css" rel="stylesheet" type="text/css" />').appendTo('head');
+    sh_highlightDocument();
 
 });
 
