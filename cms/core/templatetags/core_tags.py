@@ -13,6 +13,8 @@ def get_google_maps_key():
     return getattr(settings, 'GOOGLE_MAPS_KEY', "")
 
 
+
+
 @register.assignment_tag(takes_context=True)
 def get_site_root(context):
     # NB this returns a core.Page, not the implementation-specific model used
@@ -29,17 +31,24 @@ def has_menu_children(page):
 # a dropdown class to be applied to a parent
 @register.inclusion_tag('core/tags/top_menu.html', takes_context=True)
 def top_menu(context, parent, calling_page=None):
-    menuitems = parent.get_children().live().in_menu()
+    root = get_site_root(context)
+    try:
+        is_root_page = (root.id == calling_page.id)
+    except:
+        is_root_page = False
+
+    menuitems = parent.get_children().filter(
+        live=True,
+        show_in_menus=True
+    ).order_by('title')
+
     for menuitem in menuitems:
         menuitem.show_dropdown = has_menu_children(menuitem)
-        # We don't directly check if calling_page is None since the template
-        # engine can pass an empty string to calling_page
-        # if the variable passed as calling_page does not exist.
-        menuitem.active = (calling_page.url.startswith(menuitem.url)
-                           if calling_page else False)
+
     return {
         'calling_page': calling_page,
         'menuitems': menuitems,
+        'is_root_page':is_root_page,
         # required by the pageurl tag that we want to use within this template
         'request': context['request'],
     }
@@ -47,12 +56,23 @@ def top_menu(context, parent, calling_page=None):
 
 # Retrieves the children of the top menu items for the drop downs
 @register.inclusion_tag('core/tags/top_menu_children.html', takes_context=True)
-def top_menu_children(context, parent):
-    menuitems_children = parent.get_children()
+def top_menu_children(context, parent, sub=False, level=0):
+    menuitems_children = parent.get_children().order_by('title')
+
     menuitems_children = menuitems_children.live().in_menu()
+
+    for menuitem in menuitems_children:
+        menuitem.show_dropdown = has_menu_children(menuitem)
+
+    levelstr= "".join('a' for i in range(level)) # for indentation
+    level += 1
+
     return {
         'parent': parent,
         'menuitems_children': menuitems_children,
+        'sub': sub,
+        'level':level,
+        'levelstr':levelstr,
         # required by the pageurl tag that we want to use within this template
         'request': context['request'],
     }

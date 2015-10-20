@@ -1,9 +1,28 @@
 {% load core_tags wagtailcore_tags %}
 
 <ul class="dropdown-menu">
-    {# Include link to parent because the parent link is a drop down #}
-    <li><a href="{% pageurl parent %}">{{ parent.title }}</a></li>
     {% for child in menuitems_children %}
-        <li><a href="{% pageurl child %}">{{ child.title }}</a></li>
+        {% if child.show_dropdown %}
+            <li>
+                <a href="{% pageurl child %}">
+                    {% for i in levelstr %}&nbsp&nbsp{% endfor %}
+                    {{ child.title }}
+                    <span> ></span>
+                </a>
+                {# On the next line, we're calling the same template tag we're rendering. We only do this when there are child pages of the menu item being rendered. #}
+                {% top_menu_children parent=child sub=True level=level %}
+                {# ^^^^ SmartMenus is made to render menus with as many levels as we like. Bootstrap considers this outside of best practices and, with version 3, has deprecated the ability to do so. Best practices are made to be broken, right :] #}
+            </li>
+        {% else %}
+            <li>
+                <a href="{% pageurl child %}">
+                    <!-- Allows for indentation based on depth of page in the site structure -->
+                    {% for i in levelstr %}&nbsp&nbsp{% endfor %}
+                    {{ child.title }}
+                </a>
+            </li>
+        {% endif %}
     {% endfor %}
 </ul>
+
+
