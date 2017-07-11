@@ -19,23 +19,23 @@ ADMINS = (
 # as per https://docs.djangoproject.com/en/dev/topics/email/#email-backends
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'cms.sqlite',
-#     }
-# }
-
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'postgres',
-       'USER': 'postgres',
-       'HOST': os.environ['POSTGRES_PORT_5432_TCP_ADDR'],
-       'PASSWORD': '',
-       'PORT': ''
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'cms.sqlite',
+    }
 }
+
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'postgres',
+#        'USER': 'postgres',
+#        'HOST': os.environ['POSTGRES_PORT_5432_TCP_ADDR'],
+#        'PASSWORD': '',
+#        'PORT': ''
+#    }
+# }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -286,7 +286,7 @@ SESSION_CACHE_ALIAS = "default"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://redis:6379",
+        "LOCATION": "redis://0.0.0.0:6379",
         "KEY_PREFIX": "cms",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
